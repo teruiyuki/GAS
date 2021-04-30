@@ -1,2 +1,11 @@
-aaaaaaaa
-kageyama
+function email() {
+  let recipient = "kageyama-kyo@webrage.com";
+  let subject = "件名";
+  let body = "本文";
+  let options = {
+  cc: "cc@sample.com",
+  bcc: "bbc@sample.com"
+  };
+
+GmailApp.sendEmail(recipient, subject, body, options);
+}
