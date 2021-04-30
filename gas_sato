@@ -1,34 +1,54 @@
 function onOpen() {
-    var spreadsheet = SpreadsheetApp.getActive();
-    var menuItems = [
-      {name: 'リストにメール送信', functionName: 'sendMail'}
-    ];
-    spreadsheet.addMenu('メール送信', menuItems);
-  }
-  
-  function sendMail(){
-   
-   var doc = DocumentApp.openById('1fZTLeMncFoXIpdgEBhA2FS5ROboQR9VJ_xrckpcFRW0');
-   var text = doc.getBody().getText();
-  
-   var spreadsheet = SpreadsheetApp.getActive();
-   var sheet = spreadsheet.getActiveSheet();
-   var range = sheet.getDataRange();
-   var rangeValues = range.getValues();
-  
-   for(var i = 1; i<rangeValues.length; i++){
-     var name = rangeValues[i][1];
-     var email = rangeValues[i][2];
-     var subject = rangeValues[i][3];
-  
-     var replacedText = text.replace('{氏名}', name);
-     var options={
-       "cc": "ishii-sato@webrage.jp",
-       "bcc": "ishii-sato@webrage.jp"
-     };
-  
+  let spreadsheet = SpreadsheetApp.getActive();
+  var menuItems = [
+    {name: 'リストにメール送信', functionName: 'sendMail'}
+  ];
+  spreadsheet.addMenu('メール送信', menuItems);
+}
+
+var today = new Date();
+var year = today.getFullYear();
+var month = today.getMonth()+1;
+var date = today.getDate(); 
+//var tomorrow = today.getDate()+1;
+
+function createTrigger(){
+ scriptApp.newTrigger("TriggerFunction")
+  .timeBased()
+  .atHour(9)//９時に実行
+  .everyDays(1)//1日おきに実行
+  .create();
+}
+
+function sendMail(){
+ var doc = DocumentApp.openById('1fZTLeMncFoXIpdgEBhA2FS5ROboQR9VJ_xrckpcFRW0');
+ var text = doc.getBody().getText();
+ var subject = doc.getName();
+
+ var sheet = SpreadsheetApp.getActive();
+ var range = sheet.getDataRange();
+ var rangeValues = range.getValues();
+ 
+ for(var i = 1; i<rangeValues.length; i++){
+   var name = rangeValues[i][1];
+   var email = rangeValues[i][2];
+   var time = rangeValues[i][3];
+   var toshi = rangeValues[i][4];
+   var tsuki = rangeValues[i][5];
+   var hi = rangeValues[i][6];
+
+   var replacedText = text.replace('{氏名}', name).replace('{年}', year).replace('{月}', month).replace('{日}', date);
+
+   var options={
+     "cc": "ishii-sato@webrage.jp",
+     "bcc": "ishii-sato@webrage.jp"
+   };
+
+   if(toshi==year && tsuki==month && hi==date){
     MailApp.sendEmail(email, subject, replacedText, options);
    }
-  
-   Browser.msgBox('メール送信が完了しました'); 
+ }
+ //time<=today &&
+ //toshi==year && tsuki==month && hi==date
+ Browser.msgBox('メール送信が完了しました'); 
 }
