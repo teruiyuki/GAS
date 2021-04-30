@@ -1,1 +1,33 @@
-aaaa
+function onOpen() {
+    var spreadsheet = SpreadsheetApp.getActive();
+    var menuItems = [
+      {name: 'リストにメール送信', functionName: 'sendMail'}
+    ];
+    spreadsheet.addMenu('メール送信', menuItems);
+  }
+  
+  function sendMail(){
+   
+   var doc = DocumentApp.openById('https://docs.google.com/document/d/1qTzbNiYRnjv-m0WEKdoZAcMhtyfBotIyFGV_Vkpqcl8/edit?usp=sharing');
+   var text = doc.getBody().getText();
+  
+   var spreadsheet = SpreadsheetApp.getActive();
+   var sheet = spreadsheet.getActiveSheet();
+   var range = sheet.getDataRange();
+   var rangeValues = range.getValues();
+  
+   for(var i = 1; i<rangeValues.length; i++){
+     var name = rangeValues[i][1];
+     var email = rangeValues[i][2];
+     var subject = rangeValues[i][3];
+  
+     var replacedText = text.replace('{氏名}', name);
+     var options={
+       "cc": "hamada-junki@webrage.jp",
+       "bcc": "hamadajunki@webrage.jp"
+     };
+  
+    MailApp.sendEmail(email, subject, replacedText, options);
+   }
+  
+   Browser.msgBox('メール送信が完了しました'); 
