@@ -31,3 +31,4 @@ function onOpen() {
    }
   
    Browser.msgBox('メール送信が完了しました'); 
+}
