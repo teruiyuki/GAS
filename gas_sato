@@ -50,5 +50,7 @@ function sendMail(){
  }
  //time<=today &&
  //toshi==year && tsuki==month && hi==date
+ //時間も条件に入れたいのによくわからない
+ 
  Browser.msgBox('メール送信が完了しました'); 
 }
