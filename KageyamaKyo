@@ -1,7 +1,8 @@
 function email() {
   let recipient = "kageyama-kyo@webrage.com";
   let subject = "件名";
-  let body = "本文";
+  var doc = DocumentApp.openById('1RpwyVZvhwHwsBOxVMv0Jw3__6Vb1Ln1QKpTgGB1DSyo');
+  var body = doc.getText();
   let options = {
   cc: "cc@sample.com",
   bcc: "bbc@sample.com"
