@@ -1,0 +1,15 @@
+function sendMail() {
+  var doc = DocumentApp.openById('14zFTF6ztJW6Q8cywsyCdIzamCrKvVvBk71focsDZ9cg');
+  var subject = doc.getName();
+  var text = doc.getBody().getText();
+  
+  var spreadsheet = SpreadsheetApp.getActive();
+  var sheet = spreadsheet.getActiveSheet();
+  var company = sheet.getRange('A1').getValue();
+  var name = sheet.getRange('B1').getValue();
+  var email = sheet.getRange('C1').getValue();
+    
+  var mailtext = text.replace('{会社名}', company).replace('{氏名}', name);
+    
+  MailApp.sendEmail(email, subject, mailtext);
+}
