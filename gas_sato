@@ -6,10 +6,10 @@ function onOpen() {
   spreadsheet.addMenu('メール送信', menuItems);
 }
 
-var today = new Date();
-var year = today.getFullYear();
-var month = today.getMonth()+1;
-var date = today.getDate(); 
+var today = new Date(); //日付を取得
+var year = today.getFullYear(); //年
+var month = today.getMonth()+1; //月、-1なのはなんで?????
+var date = today.getDate(); //日付、getDay()は曜日
 //var tomorrow = today.getDate()+1;
 /*
 function createTrigger(){
@@ -18,7 +18,7 @@ function createTrigger(){
   .atHour(9)//9時に実行
   .everyDays(1)//1日おきに実行
   .create();
-}
+}セルから送信時間を取得するのはどうやるのーーー
 */
 
 function sendMail(){
@@ -35,10 +35,10 @@ function sendMail(){
    var name = rangeValues[i][2];
    var email = rangeValues[i][3];
    var docURL = rangeValues[i][4];
-   var docid = docURL.split('/')[5];
+   var docid = docURL.split('/')[5]; //URLからドキュメントIDを取得
    var doc = DocumentApp.openById(docid); //Googleドキュメントを取得
-   var text = doc.getBody().getText().replace('{氏名}', name);
-   var subject = doc.getName();
+   var text = doc.getBody().getText().replace('{氏名}', name); //ドキュメント内の置き換え
+   var subject = doc.getName(); //ドキュメント名を取得し、subjectに代入
 
    //var replacedText = text.replace('{氏名}', name);
 
