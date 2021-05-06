@@ -1,19 +1,23 @@
-function sendMail() {
+function mailsend(){
   //ドキュメント参照
   var doc = DocumentApp.openById('14zFTF6ztJW6Q8cywsyCdIzamCrKvVvBk71focsDZ9cg');
   var subject = doc.getName();
   var text = doc.getBody().getText();
-  
+
   //スプレッドシート参照
-  var spreadsheet = SpreadsheetApp.getActive();
-  var sheet = spreadsheet.getActiveSheet();
-  var company = sheet.getRange('A1').getValue();
-  var name = sheet.getRange('B1').getValue();
-  var email = sheet.getRange('C1').getValue();
-  
-  //本文の会社名と氏名を置き換える
-  var mailtext = text.replace('{会社名}', company).replace('{氏名}', name);
-    
-  //メールの送信
-  MailApp.sendEmail(email, subject, mailtext);
+  var a = SpreadsheetApp.getActiveSpreadsheet();
+  var b = SpreadsheetApp.getActiveSheet();
+  var c = b.getRange('A2:C3');
+  var d = c.getValues();
+
+  for(i in d){
+    var h = d[i];
+    var toCompany = h[0]
+    var toName = h[1];
+    var toAddress = h[2];
+
+    //本文の会社名と氏名を置き換える
+    var mailtext = text.replace('{会社名}', toCompany).replace('{氏名}', toName);
+    MailApp.sendEmail(toAddress,subject,mailtext);
+    }
 }
