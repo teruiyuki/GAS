@@ -1,1 +1,21 @@
+function mailTest(){
+　var a = SpreadsheetApp.getActiveSpreadsheet();
+　var b = SpreadsheetApp.getActiveSheet();
+　var c = b.getRange("A2:C5");
+　var d = c.getValues();
+
+　for(i in d){
+　　var h = d[i];
+　　var toName = h[0];
+　　var toAddress = h[1];
+　　var message = h[2];
+　　var mainMessage = toName+"さん\n\nこんにちは\n"+message;
+　　var subjest= toName+"さん宛てのテストメールのタイトルです。";
+　　MailApp.sendEmail(toAddress,subjest,mainMessage);
+　　}
+}
+　function onOpen(){
+　　var myTest = [{name:"メールテスト",functionName:"mailTest"}];
+　　SpreadsheetApp.getActiveSpreadsheet().addMenu("テスト", myTest);
+}
 
