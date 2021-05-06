@@ -19,3 +19,5 @@ function mailTest(){
 　　SpreadsheetApp.getActiveSpreadsheet().addMenu("テスト", myTest);
 }
 
+
+intinc
