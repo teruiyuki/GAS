@@ -1,20 +1,20 @@
 function mailTest(){
 　var a = SpreadsheetApp.getActiveSpreadsheet();
 　var b = SpreadsheetApp.getActiveSheet();
-　var c = b.getRange('A2:C2');
+　var c = b.getRange('A2:B2');
 　var d = c.getValues();
 
 　for(i in d){
 　　var h = d[i];
 　　var toName = h[0];
 　　var toAddress = h[1];
-　　var message = h[2];
-　　var mainMessage = toName+'さん\n\お疲れ様です。\n'+message;
 　　var subjest= toName+'さん宛てのテストメールのタイトルです。';
+   const doc = DocumentApp.openById('1RpwyVZvhwHwsBOxVMv0Jw3__6Vb1Ln1QKpTgGB1DSyo');
+   const body = doc.getText();
 　　var options={
        "cc": "kageyama-kyo@webrage.jp",
        "bcc": "kageyama-kyo@webrage.jp"
      };
-MailApp.sendEmail(toAddress,subjest,mainMessage,options);
+MailApp.sendEmail(toAddress,subjest,body,options);
 　　}
 　}
